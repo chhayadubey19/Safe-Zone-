@@ -1,0 +1,460 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================================
+   SafeZone — "Civic Trust" design system
+   Calm interface, loud status: neutral greys for chrome, colour ONLY for state.
+   ========================================================================= */
+
+@theme {
+  /* Surfaces & text */
+  --color-canvas: #f8fafc; /* app background */
+  --color-surface: #ffffff; /* cards */
+  --color-edge: #e2e8f0; /* borders */
+  --color-navy: #1e3a5f; /* primary */
+  --color-navy-hover: #2b4e7e;
+  --color-navy-soft: #e8eef5;
+  --color-ink: #1c1917;
+  --color-ink-muted: #78716c;
+
+  /* TRUST ladder — source of information. Never mix with risk. */
+  --color-trust-verified: #16a34a;
+  --color-trust-verified-soft: #dcfce7;
+  --color-trust-citizen: #f59e0b;
+  --color-trust-citizen-soft: #fef3c7;
+  --color-trust-unverified: #94a3b8;
+
+  /* RISK ladder — priority of attention. Never mix with trust. */
+  --color-risk-urgent: #dc2626;
+  --color-risk-urgent-soft: #fee2e2;
+  --color-risk-high: #ea580c;
+  --color-risk-high-soft: #ffedd5;
+  --color-risk-verification: #f59e0b;
+  --color-risk-verification-soft: #fef3c7;
+  --color-risk-insufficient: #94a3b8;
+  --color-risk-insufficient-soft: #f1f5f9;
+
+  /* Elevation — soft, civic, never dramatic */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 4px 12px rgba(30, 58, 95, 0.12);
+
+  /* ---------------------------------------------------------------------------
+     CATEGORY ladder — semantic accent per subject area (2024 redesign).
+     Restrained hues: very light background + dark icon of the same family.
+     Never used for risk state (RISK ladder owns that) or trust (TRUST ladder).
+     base   = the dark icon / text tone
+     soft   = the tinted background tone
+     line   = borders at low alpha
+     --------------------------------------------------------------------------- */
+  --color-cat-location: #2e7d4f;        /* explore / places — muted green */
+  --color-cat-location-soft: #e9f4ed;
+  --color-cat-safety: #b45309;          /* safety / warning — dark amber */
+  --color-cat-safety-soft: #fbf0e0;
+  --color-cat-ai: #6453c0;               /* AI analysis — restrained violet */
+  --color-cat-ai-soft: #f0edfa;
+  --color-cat-report: #be4a38;           /* reports — muted coral */
+  --color-cat-report-soft: #fcecea;
+  --color-cat-education: #41599e;       /* education — muted indigo */
+  --color-cat-education-soft: #ecf0f9;
+  --color-cat-medical: #2e6da8;          /* medical — soft blue */
+  --color-cat-medical-soft: #e9f2f9;
+  --color-cat-community: #6b7431;        /* community — muted olive */
+  --color-cat-community-soft: #f2f4e7;
+  --color-cat-venue: #96682f;            /* venue / business — warm sand */
+  --color-cat-venue-soft: #f8f1e6;
+  --color-cat-neutral: #1e3a5f;          /* neutral — the civic navy */
+  --color-cat-neutral-soft: #e8eef5;
+
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.75rem; /* rounded-xl cards on the 8px grid */
+  --background: #f8fafc;
+  --foreground: #1c1917;
+  --card: #ffffff;
+  --card-foreground: #1c1917;
+  --popover: #ffffff;
+  --popover-foreground: #1c1917;
+  --primary: #1e3a5f;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #1e3a5f;
+  --muted: #f1f5f9;
+  --muted-foreground: #78716c;
+  --accent: #e8eef5;
+  --accent-foreground: #1e3a5f;
+  --destructive: #dc2626;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #1e3a5f;
+  --chart-1: #16a34a;
+  --chart-2: #f59e0b;
+  --chart-3: #dc2626;
+  --chart-4: #ea580c;
+  --chart-5: #94a3b8;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1c1917;
+  --sidebar-primary: #1e3a5f;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1f5f9;
+  --sidebar-accent-foreground: #1e3a5f;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #1e3a5f;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    background: #f8fafc;
+  }
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  /* Inter tabular numerals for scores & counts */
+  .tnums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  /* Subtle scrollbar for long venue lists */
+  .scrollbar-subtle {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+  }
+  .scrollbar-subtle::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scrollbar-subtle::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-subtle::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+  }
+  .scrollbar-subtle::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+}
+
+/* ============================================================================
+   Leaflet — Carto Positron base, civic markers, touch-friendly controls
+   ========================================================================= */
+
+.leaflet-container {
+  font-family: inherit;
+  background: #f8fafc;
+}
+
+/* Tap targets ≥ 48px on map controls */
+.leaflet-bar a {
+  width: 44px !important;
+  height: 44px !important;
+  line-height: 44px !important;
+  font-size: 20px !important;
+  color: #1e3a5f !important;
+  border-color: #e2e8f0 !important;
+}
+
+.leaflet-control-attribution {
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.85) !important;
+  color: #78716c;
+}
+
+/* Map markers — RISK ladder colours + the real tier icons (lucide paths in
+   TIER_MARKER_SVG), loud status on a calm map */
+.sz-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.35);
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 150ms ease;
+}
+.sz-marker:hover {
+  transform: scale(1.18);
+}
+.sz-marker.is-selected {
+  width: 34px;
+  height: 34px;
+  border-width: 3.5px;
+  z-index: 9999;
+}
+.sz-marker svg {
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+.sz-marker.is-selected svg {
+  width: 18px;
+  height: 18px;
+}
+.sz-marker.tier-URGENT {
+  background: #dc2626;
+  animation: sz-pulse 1.8s ease-out infinite;
+}
+.sz-marker.tier-HIGH {
+  background: #ea580c;
+}
+.sz-marker.tier-NEEDS_VERIFICATION {
+  background: #f59e0b;
+}
+.sz-marker.tier-INSUFFICIENT_DATA {
+  background: #94a3b8;
+}
+
+@keyframes sz-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(220, 38, 38, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+  }
+}
+
+.sz-map-loading {
+  background: linear-gradient(100deg, #f8fafc 40%, #eef2f7 50%, #f8fafc 60%);
+  background-size: 200% 100%;
+  animation: sz-shimmer 1.4s linear infinite;
+}
+@keyframes sz-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ============================================================================
+   Entrance choreography — short, sub-300ms rises and fades. No loops except
+   the two ambient ones (pulse ring, marker halo) which reduced-motion kills.
+   ========================================================================= */
+
+@keyframes sz-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.sz-rise {
+  animation: sz-rise 260ms ease-out both;
+}
+
+/* Larger display entrance for hero typography */
+@keyframes sz-rise-lg {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.sz-rise-lg {
+  animation: sz-rise-lg 420ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* Fade only — for overlays and page shells */
+@keyframes sz-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.sz-fade {
+  animation: sz-fade 240ms ease-out both;
+}
+
+/* Map-viz marker pop — pins appear sequentially via inline delay */
+@keyframes sz-pin-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  70% {
+    transform: scale(1.12);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.sz-pin-pop {
+  animation: sz-pin-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Ambient radius ring — gentle breathing sweep around selected pins */
+@keyframes sz-ring-breathe {
+  0% {
+    opacity: 0.55;
+    transform: scale(0.72);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+}
+.sz-ring-breathe {
+  animation: sz-ring-breathe 2.8s ease-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Street network draw-in for the coded map illustration */
+@keyframes sz-draw {
+  from {
+    stroke-dashoffset: var(--sz-draw-len, 600);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.sz-draw {
+  stroke-dasharray: var(--sz-draw-len, 600);
+  animation: sz-draw 900ms ease-out both;
+}
+
+/* Horizontal connector line grows (workflow steps) */
+@keyframes sz-grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.sz-grow-x {
+  transform-origin: left center;
+  animation: sz-grow-x 500ms ease-out both;
+}
+
+/* Staggered children — pair with .sz-rise via inline animation-delay */
+.sz-stagger > * {
+  animation: sz-rise 320ms ease-out both;
+}
+.sz-stagger > *:nth-child(1) { animation-delay: 60ms; }
+.sz-stagger > *:nth-child(2) { animation-delay: 130ms; }
+.sz-stagger > *:nth-child(3) { animation-delay: 200ms; }
+.sz-stagger > *:nth-child(4) { animation-delay: 270ms; }
+.sz-stagger > *:nth-child(5) { animation-delay: 340ms; }
+.sz-stagger > *:nth-child(6) { animation-delay: 410ms; }
+
+/* Single gentle fade for the old welcome overlay semantics (kept for any
+   legacy call sites) */
+.sz-welcome-fade {
+  animation: sz-rise 240ms ease-out both;
+}
+
+/* Reduced motion — kill every loop and entrance above */
+@media (prefers-reduced-motion: reduce) {
+  .sz-rise,
+  .sz-rise-lg,
+  .sz-fade,
+  .sz-pin-pop,
+  .sz-ring-breathe,
+  .sz-draw,
+  .sz-grow-x,
+  .sz-stagger > *,
+  .sz-welcome-fade {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
